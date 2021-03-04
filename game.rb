@@ -124,22 +124,25 @@ class Setting
   end
 
 #   入力されたプレイヤーの人数分Playerを作成する
-  def create_user
-    player = []
+  def create_user(player)
     @users.times.with_index(1) do |user, i| 
         player << Player.new(name: "player#{i}")
     end
-    binding.pry
   end
 end
 
-class Dealer < Setting
+class Dealer
   def initialize(cards, users)
     @cards = cards
     @users = users
   end
 
-  def distribute_hand
+  def distribute_hand(p)
+    binding.pry
+    p.each do |play|
+        play[:card1] << @cards.sample(1)
+        play[:card2] << @cards.sample(1)
+    end
   end
 end
 
@@ -165,4 +168,6 @@ end
 
 game.number_of_people(users)
 dealer = Dealer.new(cards, users)
-game.create_user
+player = []
+p = game.create_user(player)
+dealer.distribute_hand(p)
