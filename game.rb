@@ -1,3 +1,4 @@
+require "minitest/autorun"
 require "pry"
 # ポーカーゲーム(テキサスホールデム)
 # 最大プレイ人数5人
