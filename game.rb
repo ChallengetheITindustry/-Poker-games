@@ -90,7 +90,7 @@ class Setting
     while true
       setted_rate = gets.to_i
       if setted_rate == 1
-        break
+        exit
       elsif setted_rate == 2
         puts "再設定。"
         set_rate
@@ -108,10 +108,27 @@ class Setting
            TEXT
       peoples = gets.to_i
       if peoples >= 2 && peoples <= 5
-        puts "#{peoples}人でプレイします。"
         break
       else
         puts "2人以上5人以下で入力してください。"
+      end
+    end
+    puts <<~TEXT
+           プレイヤーの人数は#{peoples}でよろしいですか？
+
+           決定：1を押下
+           再設定：2を押下
+         TEXT
+
+    while true
+      setted_peoples = gets.to_i
+      if setted_peoples == 1
+        exit
+      elsif setted_peoples == 2
+        puts "再設定。"
+        number_of_people
+      else
+        puts "正しい値を入力してください"
       end
     end
   end
