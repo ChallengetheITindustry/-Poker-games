@@ -1,3 +1,4 @@
+require "pry"
 # ポーカーゲーム(テキサスホールデム)
 # 最大プレイ人数5人
 # →ユーザーに人数を入力させる。
@@ -34,8 +35,17 @@
 #     end
 # end
 
-# class Dealer
-# end
+class Dealer
+
+    def initialize(cards, number_of_users)
+        @cards = cards
+        @number_of_users = number_of_users
+    end
+
+    def distribute_hand
+       puts "#{@number_of_users}"
+    end
+end
 
 # class Game(cards)
 #     def initialize()
@@ -57,7 +67,9 @@
 
 # ゲームの設定
 class Setting
-  def initialize(cards)
+    attr_writer :users
+
+  def initialize
     points = 3000
   end
 
@@ -90,7 +102,7 @@ class Setting
     while true
       setted_rate = gets.to_i
       if setted_rate == 1
-        exit
+        break
       elsif setted_rate == 2
         puts "再設定。"
         set_rate
@@ -106,15 +118,15 @@ class Setting
              プレイヤーの人数を入力してください。
              ※2人以上5人以下で入力してください。
            TEXT
-      peoples = gets.to_i
-      if peoples >= 2 && peoples <= 5
+      users = gets.to_i
+      if users >= 2 && users <= 5
         break
       else
         puts "2人以上5人以下で入力してください。"
       end
     end
     puts <<~TEXT
-           プレイヤーの人数は#{peoples}でよろしいですか？
+           プレイヤーの人数は#{users}でよろしいですか？
 
            決定：1を押下
            再設定：2を押下
@@ -123,7 +135,7 @@ class Setting
     while true
       setted_peoples = gets.to_i
       if setted_peoples == 1
-        exit
+        break
       elsif setted_peoples == 2
         puts "再設定。"
         number_of_people
@@ -136,6 +148,9 @@ end
 
 # =========================================================
 cards = ["A", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] * 4
-game = Setting.new(cards)
+cards.shuffle!
+game = Setting.new
 game.set_rate
 game.number_of_people
+dealer = Dealer.new(cards, number_of_users)
+dealer.distribute_hand
