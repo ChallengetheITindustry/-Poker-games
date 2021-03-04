@@ -35,18 +35,6 @@ require "pry"
 #     end
 # end
 
-class Dealer
-
-    def initialize(cards, number_of_users)
-        @cards = cards
-        @number_of_users = number_of_users
-    end
-
-    def distribute_hand
-       puts "#{@number_of_users}"
-    end
-end
-
 # class Game(cards)
 #     def initialize()
 
@@ -67,8 +55,6 @@ end
 
 # ゲームの設定
 class Setting
-    attr_writer :users
-
   def initialize
     points = 3000
   end
@@ -112,21 +98,10 @@ class Setting
     end
   end
 
-  def number_of_people
-    while true
-      puts <<~TEXT
-             プレイヤーの人数を入力してください。
-             ※2人以上5人以下で入力してください。
-           TEXT
-      users = gets.to_i
-      if users >= 2 && users <= 5
-        break
-      else
-        puts "2人以上5人以下で入力してください。"
-      end
-    end
+  def number_of_people(users)
+    @users = users
     puts <<~TEXT
-           プレイヤーの人数は#{users}でよろしいですか？
+           プレイヤーの人数は#{@users}でよろしいですか？
 
            決定：1を押下
            再設定：2を押下
@@ -146,11 +121,35 @@ class Setting
   end
 end
 
+class Dealer
+  def initialize(cards, users)
+    @cards = cards
+    @users = users
+  end
+
+  def distribute_hand
+    puts "#{@users}"
+  end
+end
+
 # =========================================================
 cards = ["A", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] * 4
 cards.shuffle!
 game = Setting.new
 game.set_rate
-game.number_of_people
-dealer = Dealer.new(cards, number_of_users)
+while true
+  puts <<~TEXT
+         プレイヤーの人数を入力してください。
+         ※2人以上5人以下で入力してください。
+       TEXT
+  users = gets.to_i
+  if users >= 2 && users <= 5
+    break
+  else
+    puts "2人以上5人以下で入力してください。"
+  end
+end
+binding.pry
+game.number_of_people(users)
+dealer = Dealer.new(cards, users)
 dealer.distribute_hand
