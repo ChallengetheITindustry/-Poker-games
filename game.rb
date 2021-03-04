@@ -123,15 +123,17 @@ class Setting
     end
   end
 
+#   入力されたプレイヤーの人数分Playerを作成する
   def create_user
-    @users.to_i.times.with_index(1) do |i| 
-        player = Player.new(name: "player#{i}")
-        i = i + 1
+    player = []
+    @users.times.with_index(1) do |user, i| 
+        player << Player.new(name: "player#{i}")
     end
+    binding.pry
   end
 end
 
-class Dealer
+class Dealer < Setting
   def initialize(cards, users)
     @cards = cards
     @users = users
@@ -146,6 +148,8 @@ cards = ["A", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"] 
 cards.shuffle!
 game = Setting.new
 game.set_rate
+
+# プレイヤーの人数を入力
 while true
   puts <<~TEXT
          プレイヤーの人数を入力してください。
@@ -158,6 +162,7 @@ while true
     puts "2人以上5人以下で入力してください。"
   end
 end
+
 game.number_of_people(users)
 dealer = Dealer.new(cards, users)
 game.create_user
