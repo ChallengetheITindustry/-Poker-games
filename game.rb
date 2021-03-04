@@ -12,28 +12,31 @@ require "pry"
 # ホールカードは5枚。ラウンドは1ゲームに４回。ラウンド終了後にホールカードが一枚ずつ開かれていく。
 # ラウンド毎にユーザーはチェック、コール、レイズ、フォールドの行動を選択できる。
 
-# class Player
+class Player
+    def initialize(name)
+        @name = name
+    end
 
-#     def bet
+    def bet
 
-#     end
+    end
 
-#     def check
+    def check
 
-#     end
+    end
 
-#     def call
+    def call
 
-#     end
+    end
 
-#     def raise
+    def raise
 
-#     end
+    end
 
-#     def fold
+    def fold
 
-#     end
-# end
+    end
+end
 
 # class Game(cards)
 #     def initialize()
@@ -119,6 +122,13 @@ class Setting
       end
     end
   end
+
+  def create_user
+    @users.to_i.times.with_index(1) do |i| 
+        player = Player.new(name: "player#{i}")
+        i = i + 1
+    end
+  end
 end
 
 class Dealer
@@ -128,7 +138,6 @@ class Dealer
   end
 
   def distribute_hand
-    puts "#{@users}"
   end
 end
 
@@ -149,7 +158,6 @@ while true
     puts "2人以上5人以下で入力してください。"
   end
 end
-binding.pry
 game.number_of_people(users)
 dealer = Dealer.new(cards, users)
-dealer.distribute_hand
+game.create_user
